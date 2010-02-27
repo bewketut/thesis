@@ -1,0 +1,546 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass moderncv
+\begin_preamble
+% moderncv themes
+%\moderncvtheme[blue]{casual}                 % optional argument are 'blue' (default), 'orange', 'red', 'green', 'grey' and 'roman' (for roman fonts, instead of sans serif fonts)
+\moderncvtheme[green]{classic}% idem
+% character encoding
+% replace by the encoding you are using
+\usepackage{wasysym}
+\usepackage[scale=0.8]{geometry}
+% adjust the page margins
+%\setlength{\hintscolumnwidth}{3cm}						% if you want to change the width of the column with the dates
+%\AtBeginDocument{\setlength{\maketitlenamewidth}{6cm}}  % only for the classic theme, if you want to change the width of your name placeholder (to leave more space for your address details
+\AtBeginDocument{\recomputelengths}% required when changes are made to page layout lengths
+% personal data
+\firstname{Bewketu}\familyname{Tadilo}
+%\title{Resumé title (optional)}               % optional, remove the line if not wanted
+\address{34 Leonard Avenue}{Kingsford,NSW2032}% optional, remove the line if not wanted
+\mobile{mobile(+61434023847)}% optional, remove the line if not wanted
+%\phone{phone (optional)}                      % optional, remove the line if not wanted
+%\fax{fax ()}                          % optional, remove the line if not wanted
+\email{email(bewket@gmail.com)}% optional, remove the line if not wanted
+%\extrainfo{additional information (optional)} % optional, remove the line if not wanted
+%\photo[64pt]{picture}                         % '64pt' is the height the picture must be resized to and 'picture' is the name of the picture file; optional, remove the line if not wanted
+%\quote{Some quote (optional)}                 % optional, remove the line if not wanted
+%\nopagenumbers{}                             % uncomment to suppress automatic page numbering for CVs longer than one page
+\AtBeginDocument{\maketitle}
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\end_preamble
+\options 11pt
+\use_default_options false
+\language english
+\inputencoding utf8
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Profile
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvline
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Objective
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ A position within the Information Technology/Telecommunications field where
+ excellent problem solving and technical skills can add value.
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Section
+Education
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cventry{2004--2009}{Bachelor of Telecommunications Engineering}{University
+ of New South Wales}{School of Electrical and Telecommunications Engineering}{Sy
+dney}{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cventry{2002--2004}{Bachelor Level Physics Course}{Dilla College of Teacher
+ Education}{Dilla}{Ethiopia}{Incomplete due to offer from UNSW}  % arguments
+ 3 to 6
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Bachelor Thesis
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvline{title}{
+\backslash
+emph{Dynamic Multicast Firewall}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvline{supervisor}{Vijay Sivaraman}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvline{description}{
+\backslash
+small Building netfilter (Linux kernel) multicast firewall plugin.}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvline{link}{
+\backslash
+url {http://github.com/bewket/thesis/raw/master/thesis.pdf}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Technical skills
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvcomputer{Languages}{ C, Java, 
+\backslash
+LaTeX, PHP, PL/SQL, Bash}{Packages}{gnuplot,Matlab, Octave}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvcomputer{Platforms}{Linux, OpenSolaris, Windows}{Databases}{MySQL, Postgres}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvcomputer{Networking}{iptables, Sockets, TCP/IP}{Tools}{grep, git,svn 
+\backslash
+& other FOSSs}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvcomputer{Electrical}{Embedded systems, analog 
+\backslash
+& digital circuits} {Others}{ Design process, Project Management, Entrepreneuria
+l Engineering}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Soft Skills
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvline{Communications}{Active listener and probing details on the spot through
+ questions;}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvline{Team Player}{Easygoing personality from years of experience with
+ people of different background;}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvline{Initiative and Problem Solving} {Critical 
+\backslash
+& detailed analysis of problems aided by Engineering methodologies;}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvline{Planning 
+\backslash
+& organising} {Refined task prioritisation; balancing work, team support
+ and ad-hoc responsibilies in a timely manner;}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Experience
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+listitemsymbol}{
+\backslash
+CheckedBox{}} % change the symbol for lists
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cventry{2009 --}{Sales Team}{Brumbys Bakery.}{NSW}{}{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvlistitem{Placing orders on the phone, following up, checking when delivered
+\end_layout
+
+\begin_layout Plain Layout
+
+and signing.}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvlistitem {Taking orders from customers on the phone and working with sales
+ team
+\end_layout
+
+\begin_layout Plain Layout
+
+at the vicinity.}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvlistitem {Tracking cumulative and average hourly sales to provide prediction
+ for next produce.}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvlistitem {Face to face sales to customers.	}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cventry{2008 (3 Months)}{Database Administrator-Level 3}{WorkBuddy Solutions,
+ Pty Inc.}{NSW}{}{}               
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvlistitem{Update and modify existing MySQL databases for online workforce
+ management;}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvlistitem{Write scripts (XML, PHP, 
+\backslash
+& MySQL statements) for DB updates and automation;}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cvlistitem{Identify DB performance bottlenecks and bugs}
+\end_layout
+
+\begin_layout Plain Layout
+
+ % arguments 3 to 6 are optional
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cventry{2005--2008}{Casual Waiter/Cashier/ Cafe
+\backslash
+'e positions}{Pinnacle/Caf
+\backslash
+'e Santone}{Sydney}{NSW}{Food prep,sales,waiting, other responsibilities}
+                % arguments 3 to 6 are optional
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cventry{2005--2008}{Local/National Guide + Agent}{Self-employed}{}{Ethiopia}{Arr
+ange tours 
+\backslash
+& travels for independent or agency-based tourists}
+\end_layout
+
+\begin_layout Plain Layout
+
+      % 'publications' is the name of a BibTeX file
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Other Languages
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+cvlanguage{Amharic}{Fluent}{Native speaker}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+cvlanguage{German}{Basic}{Studied while a tourist guide}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Activities & Interests
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+cvline{Academic}{
+\backslash
+small IP networking 
+\backslash
+& security, Operating Systems}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+cvline{Sports}{
+\backslash
+small Athletics.
+ Participates in city2surf 
+\backslash
+& Bridge Run.}
+\end_layout
+
+\begin_layout Plain Layout
+
+\backslash
+cvline{Travel}{
+\backslash
+small Australia, Africa, Asia}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Referees
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\backslash
+cvline{}{Available upon request.}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
