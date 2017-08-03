@@ -1,0 +1,45 @@
+\chapter{Discussion}
+\section{Mitigating Unicast Starvation}
+The strongest assumption we made as discussed was that of unicast interaction
+of sources and clients. Here are some ways that may be able to help mitigate those
+problems:
+• If a user/multicast application is not getting its/his traffic, see what ports,
+protocols and unicast control message the application use and add those
+to the monitoring list for unicast snooping.
+• It is often helpful to monitor web browsing (but it may increase the state)-
+it is again up to the Network Manager to decide by adjusting the memory
+required and the expire time of sources.
+• If other means do not work , explicit pings to the unicast sources are
+always easy fixes.
+\section{Another Case Against NATs}
+NATs are haunted by controversies but we add one more of our own. Imagine
+the following scenario: a source from NATted network is a valid and one of clients
+tries to contact it. Due to the nature of the network on the side, our module will
+assume all sources from the NATed network are valid. The problem is artefactual
+and we do not consider it in our design as based on Engineering principles.
+\section{Why Access List Security can be Hard Multicast?}
+Multicasting has a seemingly very strange semantics. If two processes open the
+same port as a multicast socket and then join two different multicast groups then
+traffic for both multicast groups is forwarded to either process. This means that
+application will get surprising data that they did not ask for. Applications will
+have to filter these out in order to work correctly if multiple applications run on
+the same system.
+The intent was that multicast address socket behavior would be just like unicast
+address behavior, with the exception that multicast addresses are interface-specific.
+If we add a new unicast address to the machine, and the binding on the socket
+doesn’t restrict it, you will receive packets from any of the addresses on the machine.
+That’s what INADDR\_ANY means. Your multicast application may also receive
+unicast traffic on that port too.
+Some operating systems supporting Multicast have since changed to only sup-
+plying multicast traffic to a socket that was selected through multicast join op-
+erations. (application will no longer receive traffic from multicast groups that it
+did not subscribe to.) That does not totally avoid the problem except violating
+the RFC which is explained in the second paragraph. The problem is anyone on
+the network, or within multicast routing domain, may reuse both-multicast group
+and port- for a different machine and the application will receive them. The other
+machine will also receive the traffic destined for the application.
+Why did we go to ’unnecessary’ detail above? It should be clear the virtualness
+of multicast address makes it easy for anyone to get others people data and fill
+garbage on the group address. In security point of view, there is a breach if someone
+has access to the data even if they cannot decrypt it.
+

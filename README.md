@@ -5,4 +5,5 @@ Most Universities these days are crazy giving both put LaTeX and work at the sam
 What I show you here is how to slow down things a little bit in LaTeX learning 
 and work on your topic. I wrote my thesis long time ago literally in two/three weeks.<br/> Instead I worked on my *working* code writing for longer time and finished.
 
-These are files with only front/title pages and bibliography/Referencing LaTeX additions. Yes you can use pure LaTeX in LyX to modify somethings in your document.
+These are files with only front/title pages and bibliography/Referencing LaTeX additions. Yes you can use pure LaTeX in LyX to modify somethings in your document.<br/>
+for using dia:[dia-installer.de] (http://dia-installer.de)

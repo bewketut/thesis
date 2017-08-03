@@ -6,8 +6,8 @@
 \use_default_options true
 \maintain_unincluded_children false
 \language english
-\language_package default
-\inputencoding auto
+\language_package 
+\inputencoding default
 \fontencoding global
 \font_roman default
 \font_sans default
@@ -20,7 +20,7 @@
 \font_sf_scale 100
 \font_tt_scale 100
 \graphics default
-\default_output_format default
+\default_output_format pdf2
 \output_sync 0
 \bibtex_command default
 \index_command default

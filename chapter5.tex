@@ -1,0 +1,141 @@
+\chapter{Experiments and Results}
+\begin{quote}
+pigram 95. Don’t have good ideas if you aren’t willing to be re-
+sponsible for them.
+-Alan J. Perlis
+\end{quote}
+\section{Basics Functionality Setup}
+\subsection{Tools needed.}
+• Linux based system as outlined in README in Appedix A.1.
+• Iptables Netfilter Modules as outlined in the README in AppendixA.1.
+The easiest way to check the functionality is to start a streaming video on VLC1
+server. This is simply done using GUI of the player. Then, start that session in
+VLC client. Again this is done using GUI feature of VLC. One can use the shell
+scripts given in Appendix to test the blocking and unblocking functionalities.
+\section{Resilence Test (Simulation)}
+\subsection{Test platform.}
+Operating System: OpenSuSE11.0 with Linux kernel version 2.6.25
+Architecture: x86_64 Pentium D
+Memory: 2GB (RAM 2DDR)
+\subsection{What we are measuring.} The main performance concern as previ-
+ously mentioned is the latency. Therefore, what we need to test is how long will a
+packet stay in our module before a decision is made to either drop or accept that
+packet. For that, a userland simulator is rewritten which is based on the main
+kernel module. There was a time and resource constraint to test the module on
+real systems.
+For the sake of getting pattern on how increasing number of clients, groups and
+sources contacted influence, the numbers are made large. This is in contrast with
+real networks where hundreds of clients might only be. The source code is provided
+in Appendix B.
+As can be infered from the source code, we have made the following assump-
+tions:
+• The space is kept at only 20 buckets (array)- again this is for the sake
+getting a pattern not because of lack of memory.
+1\footnote{This a very popular media player and can be found on www.videolan.org}
+Clients
+200 500 600 700 800 900 1800 3000 4000
+Time (μs) 2
+3
+4
+5
+8
+9
+24
+45
+60
+Table 5.1. Number of clients vs raw processing time
+10,000
+150
+Groups
+10 20 50 100 200 500 1000 2000
+Time (μs) 5 8 10 10 11
+11
+10
+7
+Table 5.2. Number of groups vs raw processing time
+• Every client is participating in at least one random group.
+• Every client contacts some random external host as its source.
+Then what we try to simulate is basically the searching (at peak time when none
+of the groups or sources have expired). It would also be interesting to see what the
+effect of expiring time has. We may have to defer that to our recommendation. We
+have not made any assumption whether the source is malcious or not. We average
+the time it takes for a packet to pass through or be dropped over three hundred
+source requests (a source delivering a multicast packet) .We run that again on the
+terminal 10 times and average the result.
+\subsection{Number of clients as variable.} We keep number of groups at 100
+and number of sources 10000
+25
+Clients effect
+20
+15
+10
+5
+0
+500
+1,000
+1,500
+clients
+Figure 5.1. Effect of Number of Clients on latency
+\subsection{Number of groups as variable.} We keep the number of clients at
+1000 and the sources at 10000. The assumption being one client contacts to ten
+possible unicast addresses at a time (e.g web browsing different sites.)
+Sources
+1 10 20 50 100 200 500 1000 10000
+Time (μs) 5 6 10 8 11
+10 10
+7
+6
+Table 5.3. Number of groups vs raw processing time
+Groups effect
+10
+8
+6
+0
+500
+1,000
+groups
+1,500
+2,000
+Figure 5.2. Effect of Number of Groups on latency
+\section{Number of sources as variable.} We keep the number of groups 100
+and clients at 1000.
+sources effect
+10
+8
+6
+0
+0.2
+0.4
+0.6
+sources
+0.8
+1
+·104
+Figure 5.3. Effect of Number of Sources on latency
+\section{Results Interpretation}
+The results shows the module’s dependence on internal clients number- as would
+be expected. The more clients we have the more states we have to keep. In other
+words, it is our clients that cause the state information creation by initiating those
+contacts. If we have more clients, they are likely to contact more groups and group
+sources.
+More interestingly though, the more groups we have outside, the more likely
+our clients will contact different groups. This causes a faster hash access to the
+clients. Remember we use the group and source IP addresses as hash keys to store
+the clients and then do a cross check. If these values become diverse, which is
+what happens when we increase their domain, their hash value is likely to differ
+too and thus causing less collisions. This is what is apparent on the the latter
+two graphs and on my tests. This aligns perfectly with the design challenge of
+the dynamic multicast firewall, which does not know what the source IP or group
+IP are before and considers them random. Be warned though, this assumption of
+randomness may not be true in practice. And also, the actual network load (not
+our management) maybe unbearable when so many sources and groups exist.
+Lastly, even if the results put are in the order of μs, we need to bear in mind
+multimedia applications (e.g IPTV) that mulitcasting is used for are in the order of
+M bps. The result can be that we are not processsing as fast or faster than the bitrate
+which is undesired for the application. We would be introducing artifact bandwidth
+throttling by our module. For instance, if we are watching real-time video, the
+implication is we no longer can watch it properly not because of lack of bandwidth
+but the fact that the module has clogged it. Therefore, the machine’s raw processing
+power and other features are also important in these type of situations and need
+considerations.
+

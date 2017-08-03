@@ -1,0 +1,181 @@
+\chapter{Detailed Design}
+\begin{quote}
+Make everything as simple as possible, but not simpler.
+-Albert Einstein\end{quote}
+\section{Design Dilemmas}
+We start with something we have implicitly deferred for a while. This is the
+case of IGMP leave messages. They have been left out from the code flow chart of
+the previous Chapter intentionally. Leave message can be deceptive in the spirit
+that we discussed as comeback leave & genuine leave earlier. The design dilemma
+posed by that is: do we go to that particular group hash and remove the client
+entry from there or simply ignore them?. If we remove the client to just discover
+it comes back would be inefficient. IGMP leave messages are, of course, good for
+routing scalability. In our case though, they can destroy the cache like behaviour
+we worked hard for by removing the client prematurely. Even though we included
+that implementation in our module, simplicity and less work bears against it.
+Another dilemma is ’how long should a source be valid for?’. That is once it had
+unicast interaction with one of our clients. There is no good answer. In the module
+we passed that question to the Network Manager to decide (using the userland
+Iptables program s/he can set the value on command line). Imagine our IPTV user
+again and a hypothetical scenario. S/he switches on the box and during booting
+the box contacts the content providers IP address (maybe during that action the
+filter notices the contacted IP address). The user is passively watching a movie
+from then on and no unicast interaction occurs. It would be undesirable to drop
+the packets while the user is watching.
+\section{Where is the Module and Why?}
+As can be seen on Figure 4.1, our Filter is located right after the switch. This
+mainly due to physical reason of getting the whole traffic in one interface. That is,
+the switch is where the traffic is multiplexed and demultiplexed and as such it is
+the converging point of outgoing traffic. This is called Bridge firewall- Bridgewall-
+which is also powerful as it can also do layer 2 filtering (we can, for instance, deny
+access to a user by MAC address-IP spoofing impossible- who is contacting bad IP
+addresses).
+Figure 4.1. Module location
+\section{The Memory Management Paradigm}
+One performance issue that dogged a previous student design solution was a
+periodic ’call back’ function that goes and cleans entries when a timer expires. And
+later on, goes to ask to allocate new memory when new entries appear. This can
+keep the processor quite busy with loads and stores to and from main memory
+while also destroying possible localities maintained by cache1. Memory allocation
+is also an expensive process. And when we request for more memory every now
+and then, it leads to O(n) linked list complexity (one fragmented memory points to
+next as standard linked list structure) to access what we want. This is restatement
+of memory ’fragmentation’ problem. There are smart ways of allocating- what the
+’slab allocater’ does in the Linux kernel. It is not in the document scope to discuss
+further on this matter.We urge the reader for some faith that less call to any of
+_malloc family functions is better. If not convinced we refer for discussion memory
+fragmentation and all other memory related stuff to [19].
+The fundamental basis behind the design the algorithm about to be discussed
+is:
+• Asking kernel’s memory management system (the slab allocator in Linux)
+for a new block of memory right after freeing one is to be avoided. Instead
+1\footnote{This can cause the familiar computer ’crunching’ sound- when programs that (ab)use the memory
+too much are running.}
+we want to overwrite that with a new entry. This is in the same sense of
+’one will not break a plate after eating on it and go out to buy new one
+when s/he want to eat again’.
+On further resolution the above statement, we can ask when is the right time to
+free it and how are we going to decide that memory is not needed anymore? As we
+will see in a bit the right time is when we go to that bucket location and we free it
+if the timer on that node is expired.
+The Lazy Cleaner’s Dilemma* (Optional). We introduce a motivation
+for our design that we call the lazy cleaner’s dilemma. The cleaner wants to maxi-
+mize cleanness and orderliness of stuff s/he uses but minimize cleaning work. The
+cleaning precedes the use; the stuff is considered dirty after some time of its use.
+We can raise a questions like ’When is it optimal to wash a cup that he used now to
+be considered dirty’. It is not unusual to see people have another tea on the same
+cup. Examples of non-optimal solutions: periodic cleaning, cleaning stuff s/he is
+not likely to use again. I urge you to map this analogies to memory allocation call
+optimisation.
+\section{The Lazyadd Algorithm (Insert/Delete)}
+Let’s begin with the several assumptions
+• We have allocated array of n size (take array size of 8 for illustration),
+• Initialised (for each bucket-cell) a head pointer to a a linked list node
+structure. That is what we call the initialisation step if it referred to
+below. The full glory of the data structure can be seen in Appendix
+A.2.22.
+• Our value IP address vip to be stored and hash key IP address,kip, just
+as below:
+hash(kip)
+kip
+vip
+One term that we use is dirty node which we define as a node that a timer
+associated with it has expired. We can proceed to the steps.
+Our algorithm follows roughly these steps to add vip in a bucket located by
+hash[kip]:
+\subsection{No collision.}
+2The way a linked list is implemented (and how one can utilize that) in the Linux kernel is slightly
+different from standard Computer Science courses and for us, it is another matter. We refer to the
+source code /linux/list.h if one is interested. It safe to assume standard linked list data structure
+with next, prev pointers for each structure to understand these algorithms.
+(1) Check the bucket pointed by the hash.
+kip
+hash(kip)
+vip
+(2) If the head pointer (which is valid during the initialisation step) still points
+to NO linked list, create a entry node- head node3.
+kip
+hash(kip)
+NULL
+head
+vip
+(3) This is a case when the head node is still there but it is dirty (i.e the timer
+on it has expired).
+kip
+hash(ip)
+head
+vip
+(4) From one of the two above steps, we have memory. In the first case there
+was explicit allocation; as there was no entry before, and in the second
+case there was entry but was dirty. In this step, the new entry is added.
+kip
+hash(ip)
+head
+vip
+Now let’s assume we have had collisions (we have more entries in that bucket),
+the list is not dirty up until some middle node- the entries are fresh and have not
+expired. We put this general case so the other cases can thought out or inferred.
+This leads us to the next section:
+\subsection{Collision.}
+3\footnote{This will be the “head node”. The head pointer is in the one in the array- small dots. Remember
+that the picture covers the head pointers when we show nodes- the nodes are sort of “pinned” on
+it}
+(1) We have a structure that looks like the following
+hash(ip)
+kip
+head
+vip
+next
+nnex
+nnnx
+(2) This is a very important step and key part in our algorithm.
+(a) Traverse the list until we hit the first expired- we grab its space- and
+store the new value.
+(b) Delete/clean the list downwards.
+kip
+hash(ip)
+head
+vip
+next
+nnex
+nnnx
+(3) We restore the property which allows us to do step (2) in two steps
+(a) Activate the timer (which no longer makes that node dirty)
+kip
+hash(ip)
+head
+vip
+next
+nnex
+(b) This is the last to expire and so make it the head node (the property).
+This allows to delete the rest of the list once we find latest expired
+node as we did in (2b).
+kip
+hash(ip)
+nnex
+vip
+head
+next
+This completes the process of the lazy cleaner insert algorithm.
+We have to be careful not to delete the head node at step 2.b if the linked list
+structure is circular. This is the case with Linux kernel implementation of the data
+structure. Therefore, we need to make sure to hold head node and compare it is
+not the node we are at, while dropping4 the expired structures.
+\section{Design Tradeoffs}
+\subsection{Performance, Memory, Correctness, Design Complexity.} Should
+we store the source values that our client is trying to contact? What could it pos-
+sibly mean we are not storing those values? Imagine a scenario where a malicious
+user’s address maps to an address location which has client (that is due to possible
+collision with genuine source). The probability of that happening can be quite sig-
+nificant depending the property of the hash function. The module does not check
+this but it is slight modification to the data structure including one more ip ad-
+dress something I missed. We lose extra storage of memory and one more compare
+instruction for the processor in return for correctness.
+The performance (which is packet latency at our module) has direct relation
+with how many memory cells we allocate to group and client arrays. This is a
+simple hashtable tradeoff. We see more of it in Chapter 5.
+We can also ask if it is worth the design complexity to, for example, abandon
+linked list and use other faster access complexity structures. The answer at this
+design stage is no as we have not identified that as bottleneck.
+\footnote{As not to cause another ’gravity theory moment’.}
+
