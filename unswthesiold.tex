@@ -10,8 +10,8 @@
 \usepackage[version=latest]{pgf}
 \usepackage{tikz}
 \usepackage{hyperref}
-\let\svtikzpic\tikzpicture
-\def\tikzpicture{\noindent\raggedright\svtikzpic}
+%\let\svtikzpic\tikzpicture
+%\def\tikzpicture{\noindent\svtikzpic\raggedright}
 \hypersetup{colorlinks,linkcolor={black}, citecolor={black},urlcolor={darkblue}}
 %\vspace{6cm}
 \newcommand{\mquot}[1]{\begin{quotation}\textit{#1}\end{quotation}}
@@ -106,7 +106,7 @@ one or all members of the network are participating in communication respectivel
 The use of broadcasting in many cases has been discouraged in favour of multicasting as it is prone to wasting huge resource.
 \section{WHY MULTICATING?}
 Figure 1.1. Data delivery methods
-\noindent\input{diag01.tex}
+\begin{flushleft}\input{diag01.tex}\end{flushleft}
 We refer to Figure 1.1 . The source generates a data steam with throughput
 of 1Mbps, and the data stream is to be received by three recipients. On the upper
 left-hand side we see a unicast transmission where the source sends three instances
