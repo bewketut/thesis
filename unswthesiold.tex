@@ -10,6 +10,12 @@
 \usepackage[version=latest]{pgf}
 \usepackage{tikz}
 \usepackage{hyperref}
+\usepackage{setspace}
+\onehalfspacing
+%\pagestyle{plain}
+%\fancyhf{}
+\cfoot{\thepage}
+
 %\let\svtikzpic\tikzpicture
 %\def\tikzpicture{\noindent\svtikzpic\raggedright}
 \hypersetup{colorlinks,linkcolor={black}, citecolor={black},urlcolor={darkblue}}
@@ -83,20 +89,22 @@ and receiver. One of them is how we manage these set of recipients and is discus
 in section 2.2 on page 6.
 Advances in Audiovisual technologies, that naturally demand high bandwidth,
 have spurred the recent interest in multicasting in Small and Medium Enterprises
-(SMEs) and consumer services. This is because we can significantly reduce traﬃc
-load if we use multicast eﬃciently as we will see in section 1.1 on the next page. Nevertheless, it has remained elusive to many Network Managers, Software Developers,
+(SMEs) and consumer services. This is because we can significantly reduce traffic
+load if we use multicast efficiently as we will see in section 1.1 on the next page. Nevertheless, it has remained elusive to many Network Managers, Software Developers,
 System Admins and end users who might otherwise benefit from this technology.
 Multicasting is heavily used in the stoke market where its model of updating all
 interested users at the same time fits in perfectly. The defence departments of
 countries are also big investors to the advancement the technology for better coordination in battlefields. These are areas among others in which multicasting can/is
 being used
-• Clustering
-– load sharing
-– database replication
-– failover clusters
-• IPTV and live Internet Audio (radio)
-• Interactive gaming
-• Software distribution.
+\begin{itemize}
+\item Clustering
+\item load sharing
+\item database replication
+%\item failover clusters
+\item IPTV and live Internet Audio (radio)
+\item Interactive gaming
+\item Software distribution.
+\end{itemize}
 It even comes in very handy, if a Network Manager wants to install one program
 to set of computers on his/her network, including operating systems.
 We focus this thesis with medium enterprises in our mind and from a perspective of the Network Manager for that Enterprise. We are on Layer 3 (at the network
@@ -112,26 +120,26 @@ of 1Mbps, and the data stream is to be received by three recipients. On the uppe
 left-hand side we see a unicast transmission where the source sends three instances
 of the same data to the receivers. The network link has to carry the same data
 stream multiplied by three, and so 3Mbps of bandwidth easily consumed. Whereas,
-the one on the bottom, which is the essence of multicasting, the data is replicated
+the one on the top right, which is the sense of multicasting, the data is replicated
 only when it needs to at the junction points. That, in fact, is one of the performance
 measures of multicasting routing protocols. We can tell from figure 1.1, it saves
 2Mbps for the up until the fan-out point and saves another 1Mbps for the network
 on the rightmost side. It decouples the link bandwidth dependence on the number
-of hosts wanting that traﬃc. The disadvantage of broadcasting1 in relation can
+of hosts wanting that traffic. The disadvantage of broadcasting1 in relation can
 1This has caused the creation of violent terms like packet ﬂooding and broadcast storm.
 inferred from Figure 1.1- which is uninterested hosts and routers get copy of the
 data. Though we do not want to proceed with the point- in multicast routing, it is
-desirable effect that the data travels long distance with the least “fan-out” possible
+desirable effect that the data travels long distance with the least "fan-out" possible
 thus saving a lot of bandwidth along its way to its final destination.
 \section{WHAT IS MULTICAST FIREWALL?}
 Well it is all good, we can save all the bandwidth with scale of 1/n where n
 is the number of unicast computers in the network that have to receive the
 traffic.
 The notion of unicast firewalling scheme breaks down when we are dealing with
-multicast traffic. In this thesis, when we say firewall2 what we are referring
+multicast traffic. In this thesis, when we say firewall what we are referring
 is the
 filtering type, which drops or accepts traffic, based on packet header
-information3.
+information.
 A general golden rule for firewall that maintain state, known as stateful
 firewall, is
 to trust an outsider that is contacted by an insider. Keeping that in mind, we
@@ -158,14 +166,16 @@ are not
 static. We are also going to be dealing with access list control exclusively.
 The
 authentication mechanism of sources is mainly the firewall golden rule.
-So, let’s outline why a firewall maybe needed in controlling access list
+So, let's outline why a firewall maybe needed in controlling access list
 (whose
 traffic is authorized to come in) in multicasting:
-• To protect the whole internal network from unwanted traffic
-• To protect client (insider) group members from unwanted traffic (individ-
+\begin{itemize}
+\item To protect the whole internal network from unwanted traffic
+\item To protect client (insider) group members from unwanted traffic (individ-
 ual tailored) from outside or within the network and
-• Possibly, preventing an unauthorized user within or outside the network
+\item Possibly, preventing an unauthorized user within or outside the network
 from accessing our traffic.
+\end{itemize}
 The list is not exhaustive but helps to flesh out what we want achieve. The
 first two
 are for network mantainablity while the last one is question of privacy.
@@ -176,14 +186,12 @@ are unavoidable from its designs that ironically make it attractive too. We
 discuss
 the last two points more in Chapter 6.
 \section{Problem Statement}
-From a Network Manager’s perspective the biggest worry is Denial of Ser-
+From a Network Manager's perspective the biggest worry is Denial of Ser-
 vice/Distrubuted denial-of-service (DoS/DDoS)attack on the network as
-multicas-
-ting amplifies it because multiple resources can be members- (e.g an outsider
-dumps
+multicasting amplifies it because multiple resources can be members- (e.g an outsider dumps
 traffic on the stock exchange network). All innocent group members become
 victim
-as opposed to unicast where only one user4 is affected. To defend that, the
+as opposed to unicast where only one user is affected. To defend that, the
 usual
 modus operandi in SMEs is for the Network Manager to simply block all incom-
 ing multicast traffic. Then, if someone must join a multicast group, the
@@ -195,29 +203,28 @@ bureaucratic process to achieve that.
 The problem statement is : To design a multicast firewall that relieves the
 Network Manager from entering static rules per session.
 Being rather prescriptive, our design solution should satisfy the following
-re-
-quirements in order to relieve the Network Manager from doing that:
-(1) Block all incoming multicast traffic
+requirements in order to relieve the Network Manager from doing that:\\
+(1) Block all incoming multicast traffic\\
 (2) Inspect unicast traffic that come out from clients inside our network-
 (these usually have distinct ports)- to track which unicast source addresses
-our clients are contacting
-(3) Inspect all multicast group subscription of our clients
-(4) Allow incoming multicast group traffic from sources
-(a) That have associations with clients from step 2.
-(b) Those clients are also subscribed that group in step 3.
+our clients are contacting\\
+(3) Inspect all multicast group subscription of our clients\\
+(4) Allow incoming multicast group traffic from sources\\
+(a) That have associations with clients from step 2.\\
+(b) Those clients are also subscribed that group in step 3.\\
 2-4 are restatements of the paper written on this same topic by Vijay et
-al[8]. To
-elaborate on step 2 a bit, it can, for example, be watching over all TCP
-connections
-on Port 80. That is when a user is simply browsing the web. We say more on
+al[8]. To elaborate on step 2 a bit, it can, for example, be watching over all TCP connections
+on Port 80. That is when a user simply is  browsing the web. We say more on
 this
 on later parts.
 \section{Contribution}
 Contribution of this thesis involves:
-• An algorithm that avoids as many memory allocations as possible.
-• A data structure that help models all entities involved and algorithms
+\begin{itemize}
+\item An algorithm that avoids as many memory allocations as possible.
+\item A data structure that help models all entities involved and algorithms
 along with it
-• The overall design
+\item The overall design
+\end{itemize}
 The first contribution needs acknowledgement. My supervisor, Vijay Sivaraman,
 indicated this is area of bottleneck from previous student implementation.
 This is
@@ -226,12 +233,14 @@ Chapter
 4 during discussion of detailed design.
 \section{Document Scope}
 Questions we address.
-• What kind of security model multicast entails and thus the paradigm we
+\begin{itemize}
+\item What kind of security model multicast entails and thus the paradigm we
 follow?
-• What is the design solution and its implementation?
-• What is the prototype design environment?
-• The comparison of the design solution with other implementations.
-• How is the performance with the tests conducted so far?
+\item What is the design solution and its implementation?
+\item What is the prototype design environment?
+\item The comparison of the design solution with other implementations.
+\item How is the performance with the tests conducted so far?
+\end{itemize}
 We are quite careful to avoid discussion of multicast routing in most cases.
 It is
 quite involved on its own and surely this thesis will only address such issues
@@ -247,7 +256,7 @@ It
 requires an intimate knowledge of operating systems networking stack.
 Lastly on light tone, I will jestly tell owner of a computer with 32-bit x86
 single
-processor as very lucky person unlike me who owns lowest end of ’fancy’
+processor as very lucky person unlike me who owns lowest end of 'fancy'
 multicore.
 A newer issue has propped with the advancement of multi-core operating systems
 too. We have to model our data and our programs to achieve performance taking
@@ -281,7 +290,7 @@ and the key ideas can be fully elaborated using that version of the IP. We try
 to shed
 some light at multicast enabler protocols with special emphasis given to the
 ones we
-need for this thesis most. It also introduces us to ’related’ work. The
+need for this thesis most. It also introduces us to 'related' work. The
 discussion of
 IPv6 diversion and design challenged is a great omission. But we give some
 pointers
@@ -294,8 +303,7 @@ combination of the enabling protocols involved leaves a big gap of
 information.
 Usually, Network Engineers put these separated in hyphen or slash in triplet
 or
-so (e.g MSDP/MBGP/PIM in IPv4). This is only to stress multicasting is only a
-model- not actual technology. So is unicasting but it perfectly maps to IP
+so (e.g MSDP/MBGP/PIM in IPv4). This is only to stress multicasting is a bigger model of communcations than an actual technology. So is unicasting-which Multicasting's subset- but it the only subset that maps to IP
 without
 any other protocol (needless to say, IP was designed with unicasting model in
 mind).
@@ -313,19 +321,21 @@ the other hand, must also be able to manage the list. IGMP is encapsulated in
 IP
 datagram by setting the protocol field to IPPROTO\_IGMP1 - which is a constant
 2. The following steps are involved while managing a group.
-• The router asks every period (of about 125 seconds) if anyone wants any
+\begin{itemize}
+\item The router asks every period (of about 125 seconds) if anyone wants any
 multicast message. By default, every multicast capable device must always
 Router IGMP Query
 be subscribed to one address to receive this. This is, for example, 224.0.0.1
 in IPv4.
-• Hosts that want to join a group or keep their membership alive reply
+\item Hosts that want to join a group or keep their membership alive reply
 (report) with the group address they are still participating or want to
 Host IGMP Report
 start participating.
-• If the router receives no interest from at least a single host to be in a
+\item If the router receives no interest from at least a single host to be in a
 group, that group is deleted (assuming it exists) and the router notifies
 his upper peer (if inter-domain multicasting) that it is no longer interested
 in that group.
+\end{itemize}
 The list outlines the baseline procedure that makes this group management
 work.
 This was exactly what was implemented in version 1 of IGMP. Further on the
@@ -333,25 +343,25 @@ next
 iterations various optimization were added which are discussed below. The
 latest
 IGMP version number is 3. Version 0 is mere history.
-We should take note from first point that a group’s age is about 2 minutes
+We should take note from first point that a group's age is about 2 minutes
 which we exploit on later in our Implementation.
 \subsection{The law of backward compatibility.} The IETF standards explic-
-itly require the group management ’language’ be the lowest IGMP version among
+itly require the group management 'language' be the lowest IGMP version among
 members if at least one member has that version as its upper limit support.
 This
 entails for the greater versions of IGMP to be backward compatible with their
 predecessors.
 \subsection{IGMP (v1 and v2)}. We discuss both IGMP[3] versions for compar-
-isons. Version 2 introduces ’Explicit Leave group’ message by the host when it
+isons. Version 2 introduces 'Explicit Leave group' message by the host when it
 no longer wants to receive traffic. This is to decrease link load by issuing a
 leave
 message than waiting for the group membership timer to expire; which is
 followed
-by the router asking if any one wants to receive traffic. The ’leave latency’,
+by the router asking if any one wants to receive traffic. The 'leave latency',
 the
 time between when a user stops wanting to receive traffic and the router knows
 that, will decrease. It is an optimization on the version 1 which simply
-’shuts up’
+'shuts up'
 when it no longer wants to receive traffic. Thus, the discussion IGMPv2
 includes
 both. We are mainly concerned with report messages of clients as that is where
@@ -370,16 +380,16 @@ group address
 IGMP payload/ future expansion
 Figure 2.1. IGMPv1/v2 Message Format
 %figure
-The fact is we don’t even need to dissect the IGMP header to extract the group
+The fact is we don't even need to look into the IGMP header to extract the group
 it is destined for. It can be found in the IP datagram header. That changes
 for
 leave messages; where the destination address of the IP header is set to
 224.0.0.2
 (the all-routers group). The following is some information about the fields:
-• The type describes what kind of IGMP message it is. From it we know
+\item The type describes what kind of IGMP message it is. From it we know
 if it router query, host leave message or host membership report. We are
 often concerned with IGMPV{x}\_HOST\_MEMBERSHIP\_REPORT.
-• The max resp time is heuristic based constant, which tells the host about
+\item The max resp time is heuristic based constant, which tells the host about
 when to respond with a report after a router sent query to all hosts. It is
 about 1 second and can be set to other values in IGMPv2 or later.
 2.2.3. IGMPv3. As can be seen on Figure 2.2 [1]this version have a radi-
@@ -387,14 +397,16 @@ cal change from the previous in that the header did change dramatically. It
 also
 changes the service model of traditional multicasting by coupling unicasting
 as the
-underlying framework. A new idea of ’the user should know where the multicast
-source is’ introduces that one can add:
+underlying framework. A new idea of 'the user should know where the multicast
+source is' introduces that one can add:
 MLDv2 is the coun-
-• Only those unicast source addresses that one want to hear from. (Include
+\begin{itemize}
+\item Only those unicast source addresses that one want to hear from. (Include
 mode)
-• All except those source addresses that one want hear from. (Exclude
+\item All except those source addresses that one want hear from. (Exclude
 mode)
-The sudden complexity and bloatness of this design is worth as it is proven by
+\end{itemize}
+The sudden complexity and bloatness of this design is (note)worthy as it is proven by
 experience it works for one type of model (one to many multicasting). We
 discuss
 in detail multicasting models in Section 2.4.
@@ -426,7 +438,7 @@ angle
 of our problem though. Now, it has the capacity to block static addresses when
 used in exclude \& include mode. Yes sure, one can use it to block an annoying
 user
-’on the fly’ participating in the multicast group using exclude mode (for
+'on the fly' participating in the multicast group using exclude mode (for
 example,
 quite handy when a user is playing Multiplayer online games and wants to block
 0
@@ -457,8 +469,9 @@ all members are both sources and receivers- the traditional model.
 Essentially, the
 verdict is that it is quite a capable protocol if we want a one to many
 dissemination
-type communication.3 But, multicasting has two other extra paradigms-many to
-one and many to many- and as such it solves 1/3rd of the problem.
+\footnote{'radio' style communication where a subscriber/tuner can only receive.}
+type communication. But, multicasting has two other extra paradigms-many to
+one and many to many- and as such it solves 1/3rd of the problem and mathematically walks on unsolvable relations. Whereas if We solve many-to-one relation, we can replicate that to solve the whole Multicasting paradigms.
 There is also argument against it in routing inefficiency when the number of
 sources increase. The router could easily run out of memory if it is going to
 keep
@@ -471,6 +484,9 @@ hosts and routers that only work with the earlier versions. As an example,
 Linux
 kernel networking stack integrated it in 2002 and FreeBSD4 still has not
 integrated
+\footnote{Hard to claim but a little research on the kernel mailing list will show.
+http://lists.freebsd.org/pipermail/freebsd-current/2009-March/004128.html}
+Figure 2.4. Multicast Distribution Tree
 it. Even if it is integrated, more often than not it is working with
 compatibility
 mode we discussed above. This adds some weight as why we should pursue such
@@ -487,10 +503,6 @@ to
 them and lest the document may become incoherent. But, the filter module can
 be
 done away without much information on the routing protocols.
-\footnote{’radio’ style communication where a subscriber/tuner can only receive.}
-\footnote{Hard to claim but a little research on the kernel mailing list will show.
-http://lists.freebsd.org/pipermail/freebsd-current/2009-March/004128.html}
-Figure 2.4. Multicast Distribution Tree
 Because there can be multiple receivers, the traffic path may have several
 branches as we see in Figure 2.4. The whole data path from start the source to
 receivers is known as a distribution tree. Data flow through the distribution
@@ -502,26 +514,26 @@ downstream
 interface is an outgoing or outbound interface; and an upstream interface is
 as an
 incoming or inbound interface. This is all relative to source.
-But let’s see how this distribution tree is formed following steps in Figure
+But let's see how this distribution tree is formed following steps in Figure
 2.5.
 The following steps will take place.
 (1) The source sends data packet to specific multicast group. Nobody is yet
-interested; router A simply discards it.
-(2) Listener 2 sends IGMP multicast report to router C.
+interested; router A simply discards it.\\
+(2) Listener 2 sends IGMP multicast report to router C.\\
 (3) Router C sends a join (this is done with the routing protocol) on behalf
 of Listener 2 to router B. But how did it know to ask B, not D? The
 concept of Rendez-vous point-root router- of the distribution tree comes
 here. Each multicast capable router (either dynamically or statically)
 must know the root of the tree. We assumed the source is the root here-
-which SSM also assumes as we will see soon.
-(4) Router B to A as in (3) and then the route ABC is established.
+which SSM also assumes as we will see soon.\\
+(4) Router B to A as in (3) and then the route ABC is established.\\
 As further elaboration of (3) if D was the Rendez-vous point configured in all
 routers. Source contacts A, A contacts B and, B contacts D and notifies it
 source is
 multicasting. Then, listener contacts C, C contacts D. A path ABDC would have
 been established. This path could be optimal in cases where there maybe
 another
-source but we leave that for the moment.
+source but we leave that for the moment.\\
 Figure 2.5. Multicast Pre-distribution Tree
 Each sub network that contains at least one interested listener is a leaf on
 the
@@ -559,12 +571,12 @@ ization of SSM model. SSM uses PIM-SM for routing with the simplification that
 we already know the root of the distribution tree leading a much more strict
 ver-
 sion called PIM-SSM. That simple assumption eliminates the need for RPTs, RPs,
-and Multicast Source Discovery Protocol (a lot of the ’hyphens and slashes’ we
+and Multicast Source Discovery Protocol (a lot of the 'hyphens and slashes' we
 mentioned in Section 2.1), radically simplifying the mechanisms needed to
 deliver
 multicast. It somehow becomes the shortest path problem between the source and
 the user and reduces to unicasting routing model. This no longer considers
-’group
+'group
 optimization. As mentioned Section2.2.3, support of IGMPv3 is a function of
 the
 operating system as of this writing. It may take some time before the majority
@@ -577,8 +589,8 @@ versions
 of IGMP (v1 \& v2)- the less strict ones.
 By now, we have established our playground, how it differs with its closest
 ally
-solution- SSM. We should take SSM in the form of ’related work’ to our design
-solution as we target SSM’s super set, ASM.
+solution- SSM. We should take SSM in the form of 'related work' to our design
+solution as we target SSM's super set, ASM.
 \section{Related Works}
 We have implicitly stated some existing mechanisms like using manual entry of
 the static addresses in a firewall, and using SSM. We now add some more.
@@ -607,8 +619,8 @@ can be
 found in [11].
 \subsection{Other mechanisms.} These mechanisms can be seen under one um-
 brella including ours. The ultimate objective is to let the firewall know
-’these are
-the sources we trust’. For example a solution proposed by [12] seeks to
+'these are
+the sources we trust'. For example a solution proposed by [12] seeks to
 implement
 a private protocol to notify the firewall dynamically the genuine sources that
 are
@@ -627,19 +639,21 @@ Figure 2.6. DNS-based Solution
 multicast Domain Name Server (DNS) (mDNS) which is used for LAN resource dis-
 covery in line with ousting broadcast resource discovery. SSM-Mapping[10]
 changes
-the earlier version of IGMP to IGMPv3 ’on the fly’ thus changing the model.
+the earlier version of IGMP to IGMPv3 'on the fly' thus changing the model.
 Figure
 2.6 tries to show the process.
-• Router maps IGMPv2 Joins (in SSM address range) to well- known sources
+\begin{itemize}
+\item Router maps IGMPv2 Joins (in SSM address range) to well- known sources
 via DNS
-• It usually allows only for one, or more, sources per group
-• Router maps group to source (sources) – Uses either DNS or static internal
+\item It usually allows only for one, or more, sources per group
+\item Router maps group to source (sources) – Uses either DNS or static internal
 database
+\end{itemize}
 \chapter{Design Concepts}
 \mquot{If I were stranded on a desert island and could only take one data
 structure with me, it would be the hash table.\\
 -Peter van der Linden\\
-\footnote{It is actually parody on ’C-compiler’, Expert C programming: Deep C secrets}
+%\footnote{It is actually parody on 'C-compiler', Expert C programming: Deep C secrets}
 }
 The purpose this chapter is to introduce to some key concepts that propped in
 the
@@ -651,7 +665,7 @@ the
 design we put it alongside here.
 3.1. Desired Properties for the Multicast Module
 We want to see this from the perspective of two types of people, namely, the
-Network Engineer and the user- security \& usablity. Let’s further assume as an
+Network Engineer and the user- security \& usablity. Let's further assume as an
 example: our user is watching Multicast TV programs- on a multi-channel IPTV
 capable box. This is to illustrate what users want and observe their behaviour
 and
@@ -663,14 +677,14 @@ negligibly small for some applications such as Teleconferencing. This is re-
 stating the classical satellite delay problem- what people encounter as con-
 versational gaps and synchronisation problems. After certain threshold-
 which depends on the application, delay creates confusion among the par-
-ticipants. In short, making sure zero jitter, we still can allow ’tolerable’
-non-zero latency.
-(2) Tolerable delay (for the user) when the user wants to joins a channel.
-(3) Tolerable delay (for the user) when a user wants to leave a channel.
+ticipants. In short, making sure zero jitter, we still can allow 'tolerable'
+non-zero latency.\\
+(2) Tolerable delay (for the user) when the user wants to joins a channel.\\
+(3) Tolerable delay (for the user) when a user wants to leave a channel-on return.
 The first point is the reason why multicast uses UDP (user datagram protocol),
-which has the principle of ’an early packet with error is better than a late
+which has the principle of 'an early packet with error is better than a late
 correct
-packet’ (best-effort delivery). We want to maintain this principle in our
+packet' (best-effort delivery). We want to maintain this principle in our
 multicast
 firewall design. This entails one specific requirement when inspecting the
 packet
@@ -689,7 +703,7 @@ part there is genuine leave, in which case the user actually has left the
 channel for
 considerable amount of time. The other leave is comeback leave. In this case,
 the
-user has left with the intention to come back soon. For example, the user
+user has left with the intention to return soon. For example, the user
 could
 be avoiding watching commercials on that Channel. Users can be annoyed if they
 cannot flip back to the previous channel with the back button on the remote.
@@ -711,16 +725,18 @@ network to attacks, we also want to avoid undesired heavy-handedness on
 internal
 users.
 (1) Our filter should minimize blocking genuine traffic. One special reason
-that haunts our design to cause false positives2 is unicast snooping short-
-fall. In Chapter 6, we outline ways to mitigate this problem of ’network
-auto-immune disease’.
+that haunts our design to cause false positives is unicast snooping 
+\footnote{from firewall point of view, the positives are the ones that are tested to be
+malicious}
+shortfall. In Chapter 6, we outline ways to mitigate this problem of 'network
+auto-immune disease'.\\
 (2) Our filter should minimize false-negatives. This is of lesser priority
 than
-the above. It can be simple ’annoyance’ unless orchestrated intentionally
+the above. It can be simple 'annoyance' unless orchestrated intentionally
 attack is taking place. Remember we begin with a completely blocked
 wall. We are trying to balance usability and maintainability. In this case,
-the CEO will not ask “why is the teleconferencing program not working?”
-as the case maybe for the first point.
+the CEO will not ask "why is the teleconferencing program not working?"
+as the case maybe for the first point.\\
 This leads us to discussion of the data structure of our choice.
 3.2. Hashtables
 Hashing implements the mathematical concept of a function. We choose how
@@ -739,8 +755,6 @@ hash function. This is known as perfect hashing. In most cases though, we do
 not
 know the value and number of the inputs beforehand. So, we simply allocate n
 units
-2\footnote{from firewall point of view, the positives are the ones that are tested to be
-malicious}
 of memory of the output types and put a mechanism for collision handling when
 two inputs map to the same address location-bucket. These collisions are often are
 handled by linked list data structures. Of course, we can use any data structure
@@ -750,9 +764,11 @@ Rob Pike advices[18]. When we have no prior knowledge our hash key and values,
 we aspire to have hashing function that tries to spread new values uniformly across
 the array. Some of the desirable features (among others) of a hash function for the
 spreading to happen include:
-• Good mixing and combining
-• Good speed (input to output)
-• Good avalanche effect
+\begin{itemize}
+\item Good mixing and combining
+\item Good speed (input to output)
+\item Good avalanche effect
+\end{itemize}
 The first and third points are to make sure every bit, as in 1/0, of the data has
 effect on producing the hash value.
 Before we digress too much, our main concerns is storing IP addresses. Imagine
@@ -764,31 +780,36 @@ explanation of the above points to any Data Structures book .
 \section{A word about Netfilter/Linux}
 The Netfilter Framework comprises a set of hooks on the Linux networking
 stack. A hook essentially is a function pointer and gives others the freedom to im-
-plement the function themselves- it provides the prototype of the function though3.
-Netfilter is Linux’s extensible firewall. Now, Netfilter has access to the packet as
+plement the function themselves- it provides the prototype of the function though.
+\footnote{This is C's powerful way providing what one calls 'interface in object-oriented paradigm'}
+Netfilter is Linux's extensible firewall. Now, Netfilter has access to the packet as
 argument in hook form at different stages once the packet enters the Linux kernel.
 It then has the freedom to do stuff with packet including dropping it. There are
 five different stages where the control of packet is temporally passed to Netfilter:
-• PREROUTING: All the packets, with no exceptions, hit this hook, which
+\begin{itemize}
+\item PREROUTING: All the packets, with no exceptions, hit this hook, which
 is reached before the routing decision and after all the IP header sanity
 checks are fulfilled. Port Address Translation (NAPT) and Redirection
 that is, Destination Network Translation (DNAT), are implemented in
 this hook. We can manipulate the data too.
-• LOCAL INPUT: All the packets going to the local machine reach this
-hook4. This is the last hook in the incoming path for the local machine
+\item LOCAL INPUT: All the packets going to the local machine reach this
+\footnote{As opposed to forwarding traffic.}
+hook. This is the last hook in the incoming path for the local machine
 traffic.
-• FORWARD: Packets not going to the local machine (e.g., packets going
+\item FORWARD: Packets not going to the local machine (e.g., packets going
 through the firewall) reach this hook. In a real system this will be how
-3\footnote{This is C’s powerful way providing what one calls ’interface in object-oriented paradigm’}
-4\footnote{As opposed to forwarding traffic.}
 ur module functions. All the packets are checked before forwarding them
 to one of our clients in the network.
-• LOCAL OUTPUT: This is the first hook in the outgoing packet path.
+\item LOCAL OUTPUT: This is the first hook in the outgoing packet path.
 Packets leaving the local machine always hit this hook.
-• POSTROUTING: This hook is implemented after the routing decision.
+\item POSTROUTING: This hook is implemented after the routing decision.
 Source Network Address Translation (SNAT) is registered to this hook.
+\end{itemize}
 All the packets that leave the local machine reach this hook.
-Figure 3.1. Netfilter Components (From Jan Engelhardt)
+Figure 3.1. Netfilter Components (From Jan Engelhardt\footnote{There is also extensive tutorial he wrote on 'Writing Netfilter Modules'
+and the glue API following changes in kernel. The former has Creative Commons and the latter
+GPL licenses. All can be found including the picture: http://jengelh.medozas.de/}
+)
 This is a very powerful framework that is capable of doing much more than
 we can possibly explain here. Then we have Xtables, which is shown on Figure5
 3.1,on top of it as brick layer. It provides a simpler API so that we can extend
@@ -799,17 +820,14 @@ boilerplate. This Section is very application specific and the appendix might ha
 been a better place.
 \section{System Level Overview of the Module}
 \subsection{Our Multicast Firewall.} The general concept of the filter was dis-
-cussed before as ’prescriptive’ problem statement. We have also said the way we
+cussed before as 'prescriptive' problem statement. We have also said the way we
 discover who the sources are is by snooping outgoing unicast traffic. Figure 3.2 tries
 to show what we are trying to achieve. Darth is the bad guy and Alice is the good
-5\footnote{Jan have also graciously provided extensive tutorial on ’Writing Netfilter Modules’
-and the glue API following changes in kernel. The former has Creative Commons and the latter
-GPL licenses. All can be found including the picture: http://jengelh.medozas.de/}
 source. The way we discovered Alice was good source is because someone inside
 our network has been browsing alice.com. With this, we also expose our strongest
 assumption in this thesis. That is, somehow that person/application is likely to
 have the unicast contact of some form with the source. The Figure also shows how
-Darth’s traffic is dropped by our firewall and Alice’s accepted.
+Darth's traffic is dropped by our firewall and Alice's accepted.
 Figure 3.2. The dynamic multicast firewall
 The formal statement of the above is :
 Notation 1. let C = {ci } be the set of internal clients.
@@ -817,49 +835,51 @@ Notation 2. let S = {si } be the set of external sources.
 Notation 3. let G = {gi } be the set of multicast groups.
 Then the dynamic multicast firewall claims:
 Claim 4. If ci contacts sj and joined gi a traf f ic f rom sj to gi is trustworthy.
-We can prove the claim by assuming ’trust chaining6’ and using transitivity
+We can prove the claim by assuming 'trust chaining'\footnote{This is how digital certificates work too.} and using transitivity
 property.
 The way we implemented the above claim is:
-6\footnote{This is how digital certificates work too.}
+
 For outgoing traffic. We keep two arrays of buckets:
 (1) One for groups addresses we snoop when clients join groups. Either the
 destination address is set to group address or the IGMP header has the
-group address depending on the IGMP version as in 2.2.3.
+group address depending on the IGMP version as in 2.2.3.\\
 (2) One for source addresses when clients contact contact sources. As a nor-
 mal unicast, the destination address (of the IP datagram) is set to the
-source address.
-In both cases, we hash the destination address and put the client’s IP address that
+source address.\\
+In both cases, we hash the destination address and put the client's IP address that
 contacted them.
 For incoming traffic. The incoming traffic has both source and group addresses(as
 the source is the one sending to the group). The IP datagram contains source ad-
 dress as source address and group address as destination address. That means we
 have both our hash keys. We follow the following steps:
-(1) Hash the group address, check if there exists any client at that bucket.
-(2) Hash the source address, check if there exists any client at that bucket.
-(3) If either one of (1) \& (2) is false we drop the packet and finish here.
-(4) We cross check those lists until at least one client is common in both.
+(1) Hash the group address, check if there exists any client at that bucket.\\
+(2) Hash the source address, check if there exists any client at that bucket.\\
+(3) If either one of (1) \& (2) is false we drop the packet and finish here.\\
+(4) We cross check those lists until at least one client is common in both.\\
 Mathematically, the cardinality of the union of the two sets will be less
 than sum of the cardinality of each.
 The external IP addresses serve the dual purpose of authentication and being hash
 keys for storing value of the internal clients.
 Figure 3.3 shows code flow chart and the ideas mentioned here.
 \section{Data Structures and algorithms}
-We follow a key concept in Computer Science that ’if we keep certain property
-when storing a data, we can reap some kind of benefit from it later on. The ’later
-operations’ could be simple data retrieval, search, delete or modify. This is the case
+We follow a key concept in Computer Science that 'if we keep certain property
+when storing a data, we can reap some kind of benefit from it later on. The 'later
+operations' could be simple data retrieval, search, delete or modify. This is the case
 with AVL trees, dictionaries, RB-trees and various property-based data structures.
 The algorithm that is at the core of our module relies on a property we keep in our
 insertion as we will discuss in Section 4.4. This key property is that we store the
 last seen client on top. Our data structure is as follows:
-struct xt\_mcast {
-struct hlist\_node node;
-\_\_be32 ip;
+\begin{verbatim}
+struct xt_mcast {
+struct hlist_node node;
+__be32 ip;
 //big-endian ip
 unsigned long timeout;
 };
 struct mtable {
-struct hlist\_head members[0];
+struct hlist_head members[0];
 };
+\end{verbatim}
 The timeout fields plays that role. The client with largest timeout (the freshest
 client we saw) would be the head node of the list. Somehow our ways resemble that
 of operation on a stack.
@@ -939,7 +959,7 @@ else
 /* memory was from head- do nothing */;
 28
 end
-Algorithm 1: the lazyadd algorithm
+Algorithm 1: the fastaddlazyrm algorithm
 
 \input{chapter4.tex}
 \input{chapter5.tex}

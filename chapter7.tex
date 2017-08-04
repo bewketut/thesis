@@ -1,16 +1,18 @@
 \chapter{Recommendation, Future Work}
 There can be ambitious work that can be done to better this work which include:
-• Testing and using another data structure as collision handlers (static ar-
+\begin{itemize}
+\item Testing and using another data structure as collision handlers (static ar-
 rays for example). This is in line with claims[14] that linked list spoils
 the CPU cache behaviour.
-• To migrate the code to using RCU (Read Copy Update)[15] mechanism
+\item To migrate the code to using RCU (Read Copy Update)[15] mechanism
 on the data structure instead of traditional locking we used. This is new
 elegant paradigm of synchronization of multiprocessors though patented
 by IBM.
+\end{itemize}
 And yes, the Author has done some work on the inclusion of IPv6. Part of the code
 can be found in the link given the Appendix . In fact, my wish was I complete the
 work in protocol independent way. It is fairly easy to infer what protocol has been
 used from either Netfilter or raw packet buffer. I discourage the use of protocol-
-dependent ’tricks’ unless it is explicitly used for that particular protocol. This is a
+dependent 'tricks' unless it is explicitly used for that particular protocol. This is a
 simple restatement of the principle of portability
 
