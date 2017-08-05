@@ -14,6 +14,7 @@
 %\pagestyle{plain}
 %\fancyhf{}
 %\cfoot{\thepage}
+\usepackage{float}
 
 %\let\svtikzpic\tikzpicture
 %\def\tikzpicture{\noindent\svtikzpic\raggedright}
@@ -111,8 +112,8 @@ Multicasting reduces to either unicasting and broadcasting depending on whether
 one or all members of the network are participating in communication respectively.
 The use of broadcasting in many cases has been discouraged in favour of multicasting as it is prone to wasting huge resource.
 \section{WHY MULTICATING?}
-Figure 1.1. Data delivery methods
-\begin{flushleft}\input{diag01.tex}\end{flushleft}
+\begin{flushleft}\begin{figure}[H]\input{diag01.tex}\caption{Data delivery methods}\end{figure}\end{flushleft}
+%Figure 1.1. Data delivery methods
 We refer to Figure 1.1 . The source generates a data steam with throughput
 of 1Mbps, and the data stream is to be received by three recipients. On the upper
 left-hand side we see a unicast transmission where the source sends three instances
@@ -384,13 +385,15 @@ for
 leave messages; where the destination address of the IP header is set to
 224.0.0.2
 (the all-routers group). The following is some information about the fields:
+\begin{itemize}
 \item The type describes what kind of IGMP message it is. From it we know
 if it router query, host leave message or host membership report. We are
 often concerned with IGMPV{x}\_HOST\_MEMBERSHIP\_REPORT.
 \item The max resp time is heuristic based constant, which tells the host about
 when to respond with a report after a router sent query to all hosts. It is
 about 1 second and can be set to other values in IGMPv2 or later.
-2.2.3. IGMPv3. As can be seen on Figure 2.2 [1]this version have a radi-
+\end{itemize}
+\subsection{IGMPv3.} As can be seen on Figure 2.2 [1]this version have a radi-
 cal change from the previous in that the header did change dramatically. It
 also
 changes the service model of traditional multicasting by coupling unicasting
@@ -484,7 +487,6 @@ kernel networking stack integrated it in 2002 and FreeBSD4 still has not
 integrated
 \footnote{Hard to claim but a little research on the kernel mailing list will show.
 http://lists.freebsd.org/pipermail/freebsd-current/2009-March/004128.html}
-Figure 2.4. Multicast Distribution Tree
 it. Even if it is integrated, more often than not it is working with
 compatibility
 mode we discussed above. This adds some weight as why we should pursue such
@@ -512,6 +514,8 @@ downstream
 interface is an outgoing or outbound interface; and an upstream interface is
 as an
 incoming or inbound interface. This is all relative to source.
+\indent\begin{flushleft}\begin{figure}[H]\input{mpathdiag.tex}\caption{Multicast distrubtion tree}\end{figure}\end{flushleft}
+%Figure 2.4. Multicast Distribution Tree
 But let's see how this distribution tree is formed following steps in Figure
 2.5.
 The following steps will take place.
@@ -532,7 +536,8 @@ multicasting. Then, listener contacts C, C contacts D. A path ABDC would have
 been established. This path could be optimal in cases where there maybe
 another
 source but we leave that for the moment.\\
-Figure 2.5. Multicast Pre-distribution Tree
+\begin{flushleft}\begin{figure}[H]\input{mcastpretree.tex}\caption{Multicast pre-distribution tree}\end{figure}\end{flushleft}
+%Figure 2.5. Multicast Pre-distribution Tree
 Each sub network that contains at least one interested listener is a leaf on
 the
 tree. When a new listener tunes in, a new branch is built, joining the leaf to
@@ -549,7 +554,7 @@ go
 with multicast routing as Stevens[7] note it can easily consume a book! We
 refer
 to [6] if this section disappoints.
-2.4. Any source vs. Source Specific Multicast
+\section{Any source vs. Source Specific Multicast}
 As we stressed earlier, multicasting is a model realized through various
 under-
 lying protocols. Multicasting itself is traditionally further divided into any
@@ -632,6 +637,7 @@ interested in the
 service model, we can be secure from DoS/DoS attacks. The following is done to
 make SSM-incapable hosts (due to IGMPv3) who rely on traditional multicast to
 join SSM-enabled multicasting
+\begin{flushleft}\begin{figure}[H]\input{dnsbas.tex}\caption{DNS-based solutions}\end{figure}\end{flushleft}
 Figure 2.6. DNS-based Solution
 \subsubsection{SSM-Mapping (from Cisco).} The following should not be confused with
 multicast Domain Name Server (DNS) (mDNS) which is used for LAN resource dis-
@@ -661,14 +667,14 @@ seem
 appropriate for the previous chapter but its pertinence is immediate matter to
 the
 design we put it alongside here.
-3.1. Desired Properties for the Multicast Module
+\section{Desired Properties for the Multicast Module}
 We want to see this from the perspective of two types of people, namely, the
 Network Engineer and the user- security \& usablity. Let's further assume as an
 example: our user is watching Multicast TV programs- on a multi-channel IPTV
 capable box. This is to illustrate what users want and observe their behaviour
 and
 design our solution accordingly. We use the term channel interchangeably with
-group in the example. So, from the perspective of the user:
+group in the example. So, from the perspective of the user:\\
 (1) We want no delay to traffic, latency, and even worse varying delay on
 traffic, jitter. The first one might be tolerable so long as it constant and
 negligibly small for some applications such as Teleconferencing. This is re-
@@ -736,7 +742,7 @@ wall. We are trying to balance usability and maintainability. In this case,
 the CEO will not ask "why is the teleconferencing program not working?"
 as the case maybe for the first point.\\
 This leads us to discussion of the data structure of our choice.
-3.2. Hashtables
+\section{Hashtables}
 Hashing implements the mathematical concept of a function. We choose how
 our domain changes to the set of values we want it to be transformed to via
 our
@@ -784,6 +790,14 @@ Netfilter is Linux's extensible firewall. Now, Netfilter has access to the packe
 argument in hook form at different stages once the packet enters the Linux kernel.
 It then has the freedom to do stuff with packet including dropping it. There are
 five different stages where the control of packet is temporally passed to Netfilter:
+\begin{figure}[H]
+\includegraphics[width=1.3\textwidth]{xtables.png}
+\caption{Netfilter Components}
+\end{figure}
+\footnote{From Jan Engelhardt-There is also extensive tutorial he wrote on 'Writing Netfilter Modules'
+and the glue API following changes in kernel. The former has Creative Commons and the latter
+GPL licenses. All can be found including the picture: http://jengelh.medozas.de/
+}
 \begin{itemize}
 \item PREROUTING: All the packets, with no exceptions, hit this hook, which
 is reached before the routing decision and after all the IP header sanity
@@ -804,11 +818,7 @@ Packets leaving the local machine always hit this hook.
 Source Network Address Translation (SNAT) is registered to this hook.
 \end{itemize}
 All the packets that leave the local machine reach this hook.
-Figure 3.1. Netfilter Components (From Jan Engelhardt\footnote{There is also extensive tutorial he wrote on 'Writing Netfilter Modules'
-and the glue API following changes in kernel. The former has Creative Commons and the latter
-GPL licenses. All can be found including the picture: http://jengelh.medozas.de/}
-)
-This is a very powerful framework that is capable of doing much more than
+ This is a very powerful framework that is capable of doing much more than
 we can possibly explain here. Then we have Xtables, which is shown on Figure5
 3.1,on top of it as brick layer. It provides a simpler API so that we can extend
 Netfilter functionalists by getting access to the packet we want in less complicated
@@ -826,7 +836,8 @@ our network has been browsing alice.com. With this, we also expose our strongest
 assumption in this thesis. That is, somehow that person/application is likely to
 have the unicast contact of some form with the source. The Figure also shows how
 Darth's traffic is dropped by our firewall and Alice's accepted.
-Figure 3.2. The dynamic multicast firewall
+\begin{flushleft}\begin{figure}[H]\input{dynamicmcast.tex}\caption{The Dynamic Multicast Firewall}\end{figure}\end{flushleft}
+%Figure 3.2. The dynamic multicast firewall
 The formal statement of the above is :
 Notation 1. let C = {ci } be the set of internal clients.
 Notation 2. let S = {si } be the set of external sources.
