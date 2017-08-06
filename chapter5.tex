@@ -37,23 +37,6 @@ getting a pattern not because of lack of memory.
 \item Every client contacts some random external host as its source.
 \end{itemize}
 
-\begin{tabular}{|l| l| l| l| l| l| l|l|l|l|l|}
-\hline
-Clients& 200 & 500 & 600 & 700 & 800 & 900 & 1800 & 3000 & 4000 & 10,000\\
-\hline
-Time (\mu s)& 2 & 3 & 4 & 5 & 8 & 9 & 24 & 45 & 60 & 150\\
-\hline
-\end{tabular}\\
-Table 5.1. Number of clients vs raw processing time
-
-\begin{tabular}{|l| l| l| l| l| l| l|l|l|}
-\hline
-Groups & 10 & 20 & 50 & 100 & 200 & 500 & 1000 & 2000\\
-\hline
-Time (\mu s)& 5 & 8 & 10 & 10 & 11 & 11 & 10 & 7\\
-\hline
-\end{tabular}\\
-Table 5.2. Number of groups vs raw processing time
 Then what we try to simulate is basically the searching (at peak time when none
 of the groups or sources have expired). It would also be interesting to see what the
 effect of expiring time has. We may have to defer that to our recommendation. We
@@ -63,6 +46,16 @@ source requests (a source delivering a multicast packet) .We run that again on t
 terminal 10 times and average the result.
 \subsection{Number of clients as variable.} We keep number of groups at 100
 and number of sources 10000
+\begin{tabular}{|l| l| l| l| l| l| l|l|l|l|l|}
+\hline
+Clients& 200 & 500 & 600 & 700 & 800 & 900 & 1800 & 3000 & 4000 & 10,000\\
+\hline
+Time (\mu s)& 2 & 3 & 4 & 5 & 8 & 9 & 24 & 45 & 60 & 150\\
+\hline
+\caption{Number of clients vs raw processing time}
+\end{tabular}\\
+
+
 25
 Clients effect
 20
@@ -78,14 +71,14 @@ Figure 5.1. Effect of Number of Clients on latency
 \subsection{Number of groups as variable.} We keep the number of clients at
 1000 and the sources at 10000. The assumption being one client contacts to ten
 possible unicast addresses at a time (e.g web browsing different sites.)\\
-\begin{tabular}{|l| l| l| l| l| l| l|l|l|l|}
+\begin{tabular}{|l| l| l| l| l| l| l|l|l|}
 \hline
-Sources &1 & 10 & 20 & 50 & 100 & 200 & 500 & 1000 & 10000\\
+Groups & 10 & 20 & 50 & 100 & 200 & 500 & 1000 & 2000\\
 \hline
-Time (\mu s)& 5 & 6 & 10 & 8 & 11 & 10 & 10 & 7 & 6\\
+Time (\mu s)& 5 & 8 & 10 & 10 & 11 & 11 & 10 & 7\\
 \hline
+\caption{Number of groups vs raw processing time}
 \end{tabular}\\
-Table 5.3. Number of groups vs raw processing time
 Groups effect
 10
 8
@@ -100,6 +93,14 @@ Figure 5.2. Effect of Number of Groups on latency
 \section{Number of sources as variable.} We keep the number of groups 100
 and clients at 1000.
 sources effect
+\begin{tabular}{|l| l| l| l| l| l| l|l|l|l|}
+\hline
+Sources &1 & 10 & 20 & 50 & 100 & 200 & 500 & 1000 & 10000\\
+\hline
+Time (\mu s)& 5 & 6 & 10 & 8 & 11 & 10 & 10 & 7 & 6\\
+\hline
+\end{tabular}\\
+
 10
 8
 6

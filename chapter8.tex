@@ -3,10 +3,10 @@ In Chapter 1 we looked at the benefits of multicasting and what kind security
 threat the use of it entails in SMEs. The main framework of thinking we emphasized
 is ultimately the traffic is coming from source with real IP address. The whole
 design challenge in this security issue is how we can do the mapping of the group
-virtual address to the real unicast source address. The dynamic stateful multicast
+virtual address to the *real*-not above like real-true- unicast source address-out of all sources. Pardon moi--multicast packets have source addresses. The dynamic stateful multicast
 paradigm works on the premise 'if one contacts the group they are also likely to
 contact the source they are seeking'. This, we said, is the strongest assumption of
-the thesis. But, it is also a realistic assumption.
+the thesis.  But, it is also a realistic assumption.
 In Chapter 3 and 4, we looked at the algorithms and data structures we modelled
 and implemented this idea with. We model it as to provide with a good analytical
 view the problems that are we are faced. The way it can be conceived is as a
@@ -19,7 +19,7 @@ technology, changes rapidly.
 \appendix
 \chapter{Module Code}
 The compatibility source code for different versions of Kernel from the link:
-http://github.com/bewket/adhoc-multicast/tree/master. It is taken from http://jengelh.medozas.de/ xtables-addons which seeks to provide that.
+http://github.com/bewketut/dynamic-multicast/tree/master. It is taken from http://jengelh.medozas.de/ xtables-addons which seeks to provide that.
 \section{README}
 \begin{verbatim}
 This module provides a filter for incoming multicast traffic by doing the f/g:
@@ -33,7 +33,7 @@ We store the client by the multicast source hash.
 3. When multicast trafffic come we hash both group and source address and
 Checking if the client exists in both hashes.
 You need iptables >= 1.4.3 (x_tables module)
-and kernel-source >= 2.6.17
+and kernel-header >= 2.6.17
 Tools: socat-or netcat-, vlc
 For testing purpose do the following (need to be root) :
 # sh test.sh
@@ -46,7 +46,7 @@ Then do the following (after changing the 192.x.x.x to your ip)
 echo "hi" | socat - udp-sendto:192.168.1.4:4444
 and it should now open
 You can download the code by using git. At the terminal type (this
-$git clone git://github.com/bewket/adhoc-multicast.git
+$git clone https://github.com/bewketut/dynamic-multicast.git
 \end{verbatim}
 \section{The filter Module}
 \subsection{xt\_MCAST.h.}
@@ -357,7 +357,7 @@ const struct sk_buff *skb = *pskb;
 const struct xt_mcast_target_info *info = par->targinfo;
 const struct iphdr *iph = ip_hdr(skb);
 if (info) {
-if (info->msrc_size > MGRP_SIZE)
+if (info->msrc_size > MSRC_SIZE)
 source_size = info->msrc_size;
 if (info->mgrp_size > MGRP_SIZE)
 group_size = info->mgrp_size;
