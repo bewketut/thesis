@@ -1,0 +1,61 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.1.1}{WHY MULTICATING?}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{WHAT IS MULTICAST FIREWALL?}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Problem Statement}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{Contribution}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.5}{Document Scope}{chapter.1}% 6
+\BOOKMARK [0][-]{chapter.2}{Background: Protocols, Firewalls and Related works}{}% 7
+\BOOKMARK [1][-]{section.2.1}{Protocols in Multicasting}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.2}{Group Management Protocols}{chapter.2}% 9
+\BOOKMARK [2][-]{subsection.2.2.1}{The law of backward compatibility.}{section.2.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.2}{IGMP \(v1 and v2\)}{section.2.2}% 11
+\BOOKMARK [2][-]{subsection.2.2.3}{IGMPv3.}{section.2.2}% 12
+\BOOKMARK [1][-]{section.2.3}{A Word About Multicast Routing Protocols}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.4}{Any source vs. Source Specific Multicast}{chapter.2}% 14
+\BOOKMARK [1][-]{section.2.5}{Related Works}{chapter.2}% 15
+\BOOKMARK [2][-]{subsection.2.5.1}{IETF MSEC.}{section.2.5}% 16
+\BOOKMARK [2][-]{subsection.2.5.2}{Other mechanisms.}{section.2.5}% 17
+\BOOKMARK [0][-]{chapter.3}{Design Concepts}{}% 18
+\BOOKMARK [1][-]{section.3.1}{Desired Properties for the Multicast Module}{chapter.3}% 19
+\BOOKMARK [1][-]{section.3.2}{Hashtables}{chapter.3}% 20
+\BOOKMARK [1][-]{section.3.3}{A word about Netfilter/Linux}{chapter.3}% 21
+\BOOKMARK [1][-]{section.3.4}{System Level Overview of the Module}{chapter.3}% 22
+\BOOKMARK [2][-]{subsection.3.4.1}{Our Multicast Firewall.}{section.3.4}% 23
+\BOOKMARK [1][-]{section.3.5}{Data Structures and algorithms}{chapter.3}% 24
+\BOOKMARK [0][-]{chapter.4}{Detailed Design}{}% 25
+\BOOKMARK [1][-]{section.4.1}{Design Dilemmas}{chapter.4}% 26
+\BOOKMARK [1][-]{section.4.2}{Where is the Module and Why?}{chapter.4}% 27
+\BOOKMARK [1][-]{section.4.3}{The Memory Management Paradigm}{chapter.4}% 28
+\BOOKMARK [1][-]{section.4.4}{The Fastadd Lazy remove Algorithm-faddlrm \(Insert/Delete\)}{chapter.4}% 29
+\BOOKMARK [2][-]{subsection.4.4.1}{No collision.}{section.4.4}% 30
+\BOOKMARK [2][-]{subsection.4.4.2}{Collision.}{section.4.4}% 31
+\BOOKMARK [1][-]{section.4.5}{Design Tradeoffs}{chapter.4}% 32
+\BOOKMARK [2][-]{subsection.4.5.1}{Performance, Memory, Correctness, Design Complexity.}{section.4.5}% 33
+\BOOKMARK [0][-]{chapter.5}{Experiments and Results}{}% 34
+\BOOKMARK [1][-]{section.5.1}{Basics Functionality Setup}{chapter.5}% 35
+\BOOKMARK [2][-]{subsection.5.1.1}{Tools needed.}{section.5.1}% 36
+\BOOKMARK [1][-]{section.5.2}{Resilence Test \(Simulation\)}{chapter.5}% 37
+\BOOKMARK [2][-]{subsection.5.2.1}{Test platform.}{section.5.2}% 38
+\BOOKMARK [2][-]{subsection.5.2.2}{What we are measuring.}{section.5.2}% 39
+\BOOKMARK [2][-]{subsection.5.2.3}{Number of clients as variable.}{section.5.2}% 40
+\BOOKMARK [2][-]{subsection.5.2.4}{Number of groups as variable.}{section.5.2}% 41
+\BOOKMARK [1][-]{section.5.3}{Number of sources as variable.}{chapter.5}% 42
+\BOOKMARK [1][-]{section.5.4}{Results Interpretation}{chapter.5}% 43
+\BOOKMARK [0][-]{chapter.6}{Discussion}{}% 44
+\BOOKMARK [1][-]{section.6.1}{Mitigating Unicast Starvation}{chapter.6}% 45
+\BOOKMARK [1][-]{section.6.2}{Another Case Against NATs}{chapter.6}% 46
+\BOOKMARK [1][-]{section.6.3}{Why Access List Security can be Hard Multicast?}{chapter.6}% 47
+\BOOKMARK [0][-]{chapter.7}{Recommendation, Future Work}{}% 48
+\BOOKMARK [0][-]{chapter.8}{Conclusion}{}% 49
+\BOOKMARK [0][-]{appendix.A}{Module Code}{}% 50
+\BOOKMARK [1][-]{section.A.1}{README}{appendix.A}% 51
+\BOOKMARK [1][-]{section.A.2}{The filter Module}{appendix.A}% 52
+\BOOKMARK [2][-]{subsection.A.2.1}{xt\137MCAST.h.}{section.A.2}% 53
+\BOOKMARK [2][-]{subsection.A.2.2}{xt\137MCAST.c.}{section.A.2}% 54
+\BOOKMARK [2][-]{subsection.A.2.3}{libxt\137MCAST.c \(for userland interaction to set values\).}{section.A.2}% 55
+\BOOKMARK [2][-]{subsection.A.2.4}{libxt\137MCAST.c \(for userland interaction to set values\).}{section.A.2}% 56
+\BOOKMARK [2][-]{subsection.A.2.5}{Scripts.}{section.A.2}% 57
+\BOOKMARK [0][-]{appendix.B}{Userland Simulator}{}% 58
+\BOOKMARK [1][-]{section.B.1}{Header File}{appendix.B}% 59
+\BOOKMARK [1][-]{section.B.2}{Main.c}{appendix.B}% 60
+\BOOKMARK [0][-]{appendix.C}{References}{}% 61
